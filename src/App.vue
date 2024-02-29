@@ -1,14 +1,17 @@
 <template>
   <BeboContainer msg="Welcome to Your Vue.js App" />
+  <SpeedInsights />
 </template>
 
 <script>
 import BeboContainer from "./components/BeboContainer.vue";
+import { SpeedInsights } from "@vercel/speed-insights/vue";
 
 export default {
   name: "App",
   components: {
     BeboContainer,
+    SpeedInsights,
   },
 };
 </script>
