@@ -1,17 +1,16 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <BeboContainer msg="Welcome to Your Vue.js App" />
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import BeboContainer from "./components/BeboContainer.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HelloWorld
-  }
-}
+    BeboContainer,
+  },
+};
 </script>
 
 <style>
@@ -21,6 +20,9 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  height: 100%;
+  background: url("./assets/background.jpeg");
+  background-size: cover;
+  background-position: center;
 }
 </style>
