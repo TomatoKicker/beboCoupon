@@ -13,12 +13,15 @@
       </div>
     </div>
   </div>
+  <BeboLogin />
 </template>
 
 <script>
 import { reactive } from "vue";
 import supabase from "./supabase";
 import BeboImageButton from "./BeboImageButton.vue";
+import BeboLogin from "./BeboLogin.vue";
+
 export default {
   name: "BeboContainer",
   props: {
@@ -26,6 +29,7 @@ export default {
   },
   components: {
     BeboImageButton,
+    BeboLogin,
   },
   data() {
     return {
