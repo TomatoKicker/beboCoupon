@@ -9,7 +9,6 @@
         v-model="password" />
     </div>
     <button type="button" @click="login" class="btn btn-primary">login</button>
-    {{ password }}
   </div>
 </template>
 
