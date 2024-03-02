@@ -8,14 +8,7 @@
         id="exampleInputPassword1"
         v-model="password" />
     </div>
-    <div class="mb-3 form-check">
-      <input type="checkbox" class="form-check-input" id="exampleCheck1" />
-      <label class="form-check-label" for="exampleCheck1">Check me out</label>
-    </div>
-    <button type="button" @click="login" class="btn btn-primary">Submit</button>
-    <button type="button" @click="seeCurrentUser" class="btn btn-primary">
-      CurrentUser
-    </button>
+    <button type="button" @click="login" class="btn btn-primary">login</button>
     {{ password }}
   </div>
 </template>
@@ -23,22 +16,17 @@
 <script>
 import { ref } from "vue";
 import supabase from "./supabase";
-//import supabase from "./supabase";
 
 export default {
   name: "BeboLogin",
-  props: {
-    msg: String,
-  },
+  props: {},
   components: {},
   data() {
-    return {
-      coupons: null,
-    };
+    return {};
   },
   async mounted() {},
-  setup() {
-    let password = ref("");
+  setup(props, { emit }) {
+    let password = ref();
 
     async function login() {
       const { data, error } = await supabase.auth.signInWithPassword({
@@ -47,24 +35,20 @@ export default {
       });
 
       if (error) {
-        console.log("error");
+        console.log("login failed");
         console.log(error);
       }
 
       if (data) {
         console.log("login successfull");
         console.log(data);
+        emit("loggedInEvent");
       }
-    }
-    async function seeCurrentUser() {
-      const local = await supabase.auth.getSession();
-      console.log(local);
     }
 
     return {
       password,
       login,
-      seeCurrentUser,
     };
   },
 };

@@ -1,23 +1,33 @@
 <template>
-  <BeboMain v-if="loggedIn" />
-  <BeboLogin v-if="!loggedIn" @loggedInEvent="refreshStatus" />
-  {{ loggedIn }}
+  <div class="container">
+    <div class="col-12">
+      <div class="row">
+        <div class="col-12">
+          <img src="../assets/bebo.svg" alt="" class="img-fluid pb-5" />
+        </div>
+      </div>
+      <div class="row">
+        <div v-for="coupon in coupons" :key="coupon" class="col-6 mx-auto">
+          <BeboImageButton :coupon="coupon" />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="btn btn-primary" @click="logout">logout</div>
 </template>
 
 <script>
 import { ref } from "vue";
 import supabase from "./supabase";
-import BeboLogin from "./BeboLogin.vue";
-import BeboMain from "./BeboMain.vue";
+import BeboImageButton from "./BeboImageButton.vue";
 
 export default {
-  name: "BeboContainer",
+  name: "BeboMain",
   props: {
     msg: String,
   },
   components: {
-    BeboLogin,
-    BeboMain,
+    BeboImageButton,
   },
   data() {
     return {
@@ -58,10 +68,17 @@ export default {
       }
       return null;
     }
+    async function logout() {
+      const { error } = await supabase.auth.signOut();
+      if (error) {
+        console.log(error);
+      }
+    }
     return {
       fetchDBData,
       loggedIn,
       refreshStatus,
+      logout,
     };
   },
 };
