@@ -30,7 +30,7 @@ export default {
 
     async function login() {
       const { data, error } = await supabase.auth.signInWithPassword({
-        email: "test@test.de",
+        email: process.env.VUA_APP_SUPABASE_LOGIN_MAIL,
         password: password.value,
       });
 
