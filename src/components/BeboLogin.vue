@@ -1,14 +1,21 @@
 <template>
-  <div class="container">
-    <div class="mb-3">
-      <label for="exampleInputPassword1" class="form-label">Password</label>
-      <input
-        type="password"
-        class="form-control"
-        id="exampleInputPassword1"
-        v-model="password" />
+  <div
+    class="container d-flex justify-content-center"
+    style="min-height: 100vh">
+    <div class="row my-auto">
+      <div class="col-12">
+        <div class="mb-3">
+          <input
+            type="password"
+            class="form-control"
+            id="exampleInputPassword1"
+            v-model="password" />
+        </div>
+        <button type="button" @click="login" class="btn btn-primary fw-bold">
+          LOGIN
+        </button>
+      </div>
     </div>
-    <button type="button" @click="login" class="btn btn-primary">login</button>
   </div>
 </template>
 
@@ -29,7 +36,7 @@ export default {
 
     async function login() {
       const { data, error } = await supabase.auth.signInWithPassword({
-        email: process.env.VUA_APP_SUPABASE_LOGIN_MAIL,
+        email: process.env.VUE_APP_SUPABASE_LOGIN_MAIL,
         password: password.value,
       });
 
@@ -38,7 +45,7 @@ export default {
         console.log(error);
       }
 
-      if (data) {
+      if (data.session) {
         console.log("login successfull");
         console.log(data);
         emit("loggedInEvent");
@@ -57,5 +64,9 @@ export default {
 <style scoped>
 .container {
   height: 100%;
+}
+.btn-primary {
+  border: 1px solid #ffb9d2;
+  background-color: #ffb9d2;
 }
 </style>

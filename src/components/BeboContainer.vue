@@ -1,12 +1,13 @@
 <template>
   <BeboMain v-if="loggedIn" />
   <BeboLogin v-if="!loggedIn" @loggedInEvent="refreshStatus" />
-  {{ loggedIn }}
 </template>
 
 <script>
 import { ref } from "vue";
 import supabase from "./supabase";
+import { useToast } from "vue-toast-notification";
+import "vue-toast-notification/dist/theme-sugar.css";
 import BeboLogin from "./BeboLogin.vue";
 import BeboMain from "./BeboMain.vue";
 
@@ -25,41 +26,20 @@ export default {
     };
   },
   async mounted() {
-    this.coupons = await this.fetchDBData();
     const user = await supabase.auth.getSession();
     if (user.data?.session) {
+      const $toast = useToast();
+      $toast.success("You did it!");
       this.refreshStatus();
     }
-    console.log(user.data?.session);
   },
   setup() {
     const loggedIn = ref();
     function refreshStatus() {
       loggedIn.value = true;
     }
-    async function fetchDBData() {
-      const { data: coupons, error } = await supabase
-        .from("coupons")
-        .select("*");
 
-      if (error) {
-        console.log("error");
-        console.log(error);
-        return null;
-      }
-
-      if (coupons) {
-        console.log("coupon");
-        console.log(coupons);
-        coupons.sort(function (a, b) {
-          return a.id - b.id;
-        });
-        return coupons;
-      }
-      return null;
-    }
     return {
-      fetchDBData,
       loggedIn,
       refreshStatus,
     };
